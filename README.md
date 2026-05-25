@@ -23,16 +23,9 @@ AI:
 External APIs:
 - WeatherAPI
 
-## Installation
+## Live Demo
+Frontend:
+https://ai-weather-assistant-six.vercel.app/
 
-### Backend
-
-cd backend
-npm install
-node src/server.js
-
-### Frontend
-
-cd frontend
-npm install
-npm run dev
+Backend:
+https://ai-weather-assistant-juhe.onrender.com
