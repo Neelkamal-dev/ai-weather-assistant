@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import axios from 'axios';
 
-import './App.css';
-
 function App() {
 
   const [message, setMessage] =
@@ -54,15 +52,13 @@ function App() {
 
     } catch (error) {
 
-      const aiMessage = {
-        sender: 'ai',
-        text:
-        'Something went wrong'
-      };
-
       setChat(prev => [
         ...prev,
-        aiMessage
+        {
+          sender: 'ai',
+          text:
+          'Something went wrong'
+        }
       ]);
     }
 
@@ -73,54 +69,87 @@ function App() {
 
   return (
 
-    <div className="container">
+    <div className="h-screen bg-gray-100 flex justify-center items-center">
 
-      <h1>
-        AI Weather Assistant
-      </h1>
+      <div className="w-full max-w-3xl h-[90vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
 
-      <div className="chat-box">
+        {/* Header */}
 
-        {
-          chat.map((msg, index) => (
+        <div className="bg-black text-white p-5 text-xl font-bold">
 
-            <div
-              key={index}
-              className={
-                msg.sender === 'user'
-                ? 'user-message'
-                : 'ai-message'
-              }
-            >
-              {msg.text}
-            </div>
-          ))
-        }
+          AI Weather Assistant
 
-        {
-          loading && (
-            <div className="ai-message">
-              Thinking...
-            </div>
-          )
-        }
+        </div>
 
-      </div>
+        {/* Chat Area */}
 
-      <div className="input-box">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-50">
 
-        <input
-          type="text"
-          placeholder="Ask something..."
-          value={message}
-          onChange={(e) =>
-            setMessage(e.target.value)
+          {
+            chat.map((msg, index) => (
+
+              <div
+                key={index}
+                className={`flex ${
+                  msg.sender === 'user'
+                  ? 'justify-end'
+                  : 'justify-start'
+                }`}
+              >
+
+                <div
+                  className={`max-w-[70%] px-4 py-3 rounded-2xl shadow ${
+                    msg.sender === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-black'
+                  }`}
+                >
+                  {msg.text}
+                </div>
+
+              </div>
+            ))
           }
-        />
 
-        <button onClick={sendMessage}>
-          Send
-        </button>
+          {
+            loading && (
+
+              <div className="flex justify-start">
+
+                <div className="bg-white px-4 py-3 rounded-2xl shadow">
+
+                  Thinking...
+
+                </div>
+
+              </div>
+            )
+          }
+
+        </div>
+
+        {/* Input Area */}
+
+        <div className="p-4 border-t flex gap-3 bg-white">
+
+          <input
+            type="text"
+            placeholder="Ask something..."
+            value={message}
+            onChange={(e) =>
+              setMessage(e.target.value)
+            }
+            className="flex-1 border rounded-xl px-4 py-3 outline-none"
+          />
+
+          <button
+            onClick={sendMessage}
+            className="bg-black text-white px-6 rounded-xl"
+          >
+            Send
+          </button>
+
+        </div>
 
       </div>
 
